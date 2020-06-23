@@ -10,7 +10,7 @@ echo Please enter a GRCh37 preferred transcript without version number: e.g. NM_
 
 read input
 
-varname=$(echo "$input" | sed -E -e 's/\.[0-9]+.*|\..*//g')
+varname=$(echo "$input" | sed -E -e 's/\.[0-9]+.*|\..*|.[0-9]+\://g')
 
 if ! [[  $varname = NM_[0-9]* ||  $varname = NR_[0-9]*  ]]; then
   echo "Wrong accession format"
@@ -20,6 +20,7 @@ fi
 echo $varname
 
 mkdir -p auto_genbank
+mkdir -p completed
 
 gene=$(esearch -db nuccore -query "$varname" | elink -target gene | efetch -format name|sed -n -e 's/^1.* //p')
 echo $gene

@@ -69,6 +69,7 @@ def main():
 
     Entrez.email = "suesui117@gmail.com"
     directory = os.getcwd() + "/auto_genbank/"
+    final_dir = os.getcwd() + "/completed/"
 
     while len(os.listdir(directory)) > 1:
         files_path = os.path.join(directory, '*')
@@ -85,7 +86,7 @@ def main():
             unpack = parse_path(path, user_nm)
             (record, final_nm, nc) = write_outfile(path, gene, unpack)  # This function returns record, final_nm and nc for output writing
 
-            outfile = "_".join([gene, final_nm, nc]) + ".gbk"
+            outfile = final_dir + "_".join([gene, final_nm, nc]) + ".gbk"
             with open(outfile, "w") as file:
                 file.write(str(record))
                 os.remove(path)
